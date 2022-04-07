@@ -47,7 +47,7 @@ run show route
 ## Usuwanie staticów
 
 ```bash
-delete 
+work in progress
 ```
 
 ## Konfiguracja RIP
