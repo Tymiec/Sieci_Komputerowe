@@ -34,7 +34,8 @@ run show route table ROUTERX.
 ```
 #### Dodatkowe notatki do interfejsów
 ```bash
-run show configuration set interface ge-0/0/2.0
+run show configuration
+set interface ge-0/0/2.0
 set interface ge-0/0/2.0 family inet address 192.168.X.1/30
 commit (az bedzie sukces)
 run show configuration
@@ -44,11 +45,12 @@ set routing-instances ROUTERX routing-options static route 192.168.X.4/30 next-h
 commit
 run show route
 ```
-## Usuwanie staticów
+## Modyfikacja staticów
 
 ```bash
-work in progress
-deactivate routing-instances ROUTERX routing-options static
+activate / deactivate routing-instances ROUTERX routing-options static
+
+set routing-instances ROUTER1 routing-options static route 0/0 next-hop 192.168.1.6
 ```
 
 ## Konfiguracja RIP
@@ -110,4 +112,9 @@ commit
 ```bash
 update
 save LAN-gr3-dd.mm.rrrr
+```
+
+### Zajęcia 3 nie wiem gdzie te komendy
+```bash
+deactivate routing-instances ROUTER1 protocols rip
 ```
