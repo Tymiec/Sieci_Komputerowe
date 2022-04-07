@@ -51,9 +51,36 @@ delete
 ```
 
 ## Konfiguracja RIP
+```bash
+set routing-instances ROUTER1 protocols rip group GRUPA1 neighbor ge-0/0/1.X00
+commit
+```
+
+### Ustawianie polityki
+```bash
+set policy-options policy-statement FROM-DIRECT-X
+from (warunek logiczny) 
+then accept/reject
+```
+
+```bash
+set policy-options policy-statement FROM-DIRECT-X from protocol direct
+set policy-options policy-statement FROM-DIRECT-X then accept
+run show configuration (sprawdzenie polityki)
+set routing-instances ROUTER1 protocols rip group GRUPA1 export FROM-DIRECT-X
+```
+
+### Komendy pomocniczne
+```bash
+run show rip ?
+run show rip neighbor instance ROUTER1
+run show route table ROUTER1.
+
+```
 
 ## Ładowanie i zapisywanie
 
+### Ładowanie
 Łączymy się z routerem 135 lub 138
 
 wpisujemy:
@@ -67,4 +94,9 @@ logujemy się
 configure private
 load override LAN-gr3-dd.mm.rrrr
 commit
+```
+### Zapisywanie
+```bash
+update
+save LAN-gr3-dd.mm.rrrr
 ```
