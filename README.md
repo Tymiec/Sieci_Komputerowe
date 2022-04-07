@@ -48,6 +48,7 @@ run show route
 
 ```bash
 work in progress
+deactivate routing-instances ROUTERX routing-options static
 ```
 
 ## Konfiguracja RIP
@@ -57,6 +58,8 @@ commit
 ```
 
 ### Ustawianie polityki
+
+#### From direct
 ```bash
 set policy-options policy-statement FROM-DIRECT-X
 from (warunek logiczny) 
@@ -69,6 +72,8 @@ set policy-options policy-statement FROM-DIRECT-X then accept
 run show configuration (sprawdzenie polityki)
 set routing-instances ROUTER1 protocols rip group GRUPA1 export FROM-DIRECT-X
 ```
+#### Placeholder
+
 
 ### Komendy pomocniczne
 ```bash
