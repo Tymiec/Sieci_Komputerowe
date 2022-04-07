@@ -52,7 +52,7 @@ delete
 
 ## Konfiguracja RIP
 ```bash
-set routing-instances ROUTER1 protocols rip group GRUPA1 neighbor ge-0/0/1.X00
+set routing-instances ROUTERX protocols rip group GRUPA1 neighbor ge-0/0/1.X00
 commit
 ```
 
@@ -73,8 +73,8 @@ set routing-instances ROUTER1 protocols rip group GRUPA1 export FROM-DIRECT-X
 ### Komendy pomocniczne
 ```bash
 run show rip ?
-run show rip neighbor instance ROUTER1
-run show route table ROUTER1.
+run show rip neighbor instance ROUTERX
+run show route table ROUTERX.
 
 ```
 
