@@ -77,6 +77,8 @@ set routing-instances ROUTER1 protocols rip group GRUPA1 export FROM-DIRECT-X
 set policy-options policy-statement FROM-RIP-X from protocol rip
 set policy-options policy-statement FROM-RIP-X then accept
 set routing-instances ROUTERX protocols rip group GRUPA1 export FROM-RIP-X
+
+run show advertising-protocol rip 192.168.13.6
 ```
 
 ### Komendy pomocniczne
