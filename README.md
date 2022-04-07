@@ -72,8 +72,12 @@ set policy-options policy-statement FROM-DIRECT-X then accept
 run show configuration (sprawdzenie polityki)
 set routing-instances ROUTER1 protocols rip group GRUPA1 export FROM-DIRECT-X
 ```
-#### Placeholder
-
+#### From RIP
+```bash
+set policy-options policy-statement FROM-RIP-X from protocol rip
+set policy-options policy-statement FROM-RIP-X then accept
+set routing-instances ROUTERX protocols rip group GRUPA1 export FROM-RIP-X
+```
 
 ### Komendy pomocniczne
 ```bash
