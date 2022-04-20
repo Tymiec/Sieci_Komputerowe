@@ -72,7 +72,7 @@ then accept/reject
 set policy-options policy-statement FROM-DIRECT-X from protocol direct
 set policy-options policy-statement FROM-DIRECT-X then accept
 run show configuration (sprawdzenie polityki)
-set routing-instances ROUTER1 protocols rip group GRUPA1 export FROM-DIRECT-X
+set routing-instances ROUTERX protocols rip group GRUPA1 export FROM-DIRECT-X
 ```
 #### From RIP
 ```bash
@@ -116,5 +116,5 @@ save LAN-gr3-dd.mm.rrrr
 
 ### Zajęcia 3 nie wiem gdzie te komendy
 ```bash
-deactivate routing-instances ROUTER1 protocols rip
+deactivate routing-instances ROUTERX protocols rip
 ```
