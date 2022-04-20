@@ -50,7 +50,7 @@ run show route
 ```bash
 activate / deactivate routing-instances ROUTERX routing-options static
 
-set routing-instances ROUTER1 routing-options static route 0/0 next-hop 192.168.1.6
+set routing-instances ROUTERX routing-options static route 0/0 next-hop 192.168.1.6
 ```
 
 ## Konfiguracja RIP
