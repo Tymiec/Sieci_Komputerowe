@@ -118,3 +118,14 @@ save LAN-gr3-dd.mm.rrrr
 ```bash
 deactivate routing-instances ROUTERX protocols rip
 ```
+
+### Zajęcia 4
+```bash
+set policy-options prefix-list LISTAX 192.168.X.8/30
+set policy-options policy-statement POLITYKA_PROBNA_X from prefix-list LISTA1
+set policy-options policy-statement POLITYKA_PROBNA_X then accept
+set routing-instances ROUTERX protocols rip group GRUPA1 export POLITYKA_PROBNA_X
+
+insert routing-instances ROUTERX protocols rip group GRUPAX export FROM-RIP-1 before/after FROM-DIRECT-1 
+```
+(ustawiamy polityki tak jak chcemy w jakiej kolejnosc, sprawdzamy używając ```show | compare```)
