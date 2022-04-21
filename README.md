@@ -129,3 +129,10 @@ set routing-instances ROUTERX protocols rip group GRUPA1 export POLITYKA_PROBNA_
 insert routing-instances ROUTERX protocols rip group GRUPAX export FROM-RIP-1 before/after FROM-DIRECT-1 
 ```
 (ustawiamy polityki tak jak chcemy w jakiej kolejnosc, sprawdzamy używając ```show | compare```)
+
+## Protokół OSPF
+
+```bash
+set routing-instances ROUTERX protocols ospf area 0 interface ge-0/0/1.X00 potem X01 potem X05
+run show ospf neighbor instance ROUTERX
+```
