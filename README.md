@@ -135,4 +135,16 @@ insert routing-instances ROUTERX protocols rip group GRUPAX export FROM-RIP-1 be
 ```bash
 set routing-instances ROUTERX protocols ospf area 0 interface ge-0/0/1.X00 potem X01 potem X05
 run show ospf neighbor instance ROUTERX
+run show ospf database instance ROUTERX
+run show ospf interface instance ROUTERX
+run show ospf database lsa-id 192.168.X.6 instance ROUTERX detail
+
+set interfaces lo0 unit X family inet address 192.X.0.132/32
+set routing-instances ROUTERX interface lo0.X
+( robilismy loopbacki na 131,132 136 o 133)
+```
+
+Sprzątanie routerów
+```bash
+run clear ospf database instance ROUTERX purge
 ```
