@@ -1,5 +1,9 @@
 # Sieci grupa 3
 
+```bash
+run show cli history
+```
+
 ## Konfiguracja intefejsów
 
 ### Zaczynamy zawsze od:
@@ -147,4 +151,10 @@ set routing-instances ROUTERX interface lo0.X
 Sprzątanie routerów
 ```bash
 run clear ospf database instance ROUTERX purge
+```
+
+## Zajęcia 5
+
+```bash
+
 ```
