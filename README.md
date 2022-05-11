@@ -103,7 +103,7 @@ run show route table ROUTERX.
 wpisujemy:
 
 ```bash
-run telnet 172.30.33.XXX     (XXX to numer routera)
+run telnet 172.10.0.XXX     (XXX to numer routera)
 ```
 
 logujemy się
