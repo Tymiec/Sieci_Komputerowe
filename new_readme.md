@@ -55,8 +55,4 @@ show route table ROUTERX (bez table ROUTERX pokazuje całą tablice routingu)
 run show configuration routing-instances ROUTERX (bez routing-instances ROUTERX pokazuje całą konfiguracje)
 ```
 
-
-
-
-
 > Zaktualizowano 04.05.2022
