@@ -1,85 +1,53 @@
-# Sieci grupa 3
+# Sieci Komputerowe
+> Tymek Białkowski, Paweł z klubu R, inspirowane notatkami Karoska 
 
-```bash
-run show cli history
-```
+## Konwencja nazw
 
-## Konfiguracja intefejsów
+Zamiast **X** wszędzie w tym pliku należy wpisać swój numerek!
 
-### Zaczynamy zawsze od:
+|   Zagadnienie	|   Konwencja nazw	|
+|---	|---	|
+|   Pliki z konfiguracją	|   LAN-gr5-`DD.MM.RRRR`	|
+|   Wirtualne routery	|   ROUTER`X`	|
+|   Grupy routerow	|   GRUPA`I`, dowolne	|
+|   unit-id    |   vlan-id |
+|    Polityki   |    FROM-`PROTOCOL`-`X`   |
+|   Loopback    |   192.**X**.0.**\<NR ROUTERA\>**/32  |
 
-```bash 
-configure private
-update
-```
-### Potem ustawiamy vlan i interfejs
+<div style="page-break-after: always;"></div>
 
-```bash
+<center>
+    <h1>Ustawianie routera</h1>
+</center>
+
+### Ustawiamy vlan i interfejs
+```ps1
 set interfaces ge-0/0/1 vlan-tagging
-set-interfaces ge-0/0/1 unit X00 vlan-id X00
+set interfaces ge-0/0/1 unit X00 vlan-id X00
 set interfaces ge-0/0/1 unit X00 family inet address 192.168.X.INTERFEJS (np .9/30)
-show | compare
-commit
-run show route
 ```
-
-### Dodajemy interfejs do naszego routera
-```bash
+### Tworzymy router i dodajemy do niego interface'y
+```
 set routing-instance ROUTERX instance-type virtual-router
-set routing-instance ROUTERX interface ge-0/0/1.X00
-commit
+set routing-instance ROUTERX interface ge-0/0/1.X00 
 ```
 
-#### Testowanie
-```bash
-run show route
-run ping 192.168.X.29 routing-instance ROUTERX
-run show route table ROUTERX.
-```
-#### Dodatkowe notatki do interfejsów
-```bash
-run show configuration
-set interface ge-0/0/2.0
-set interface ge-0/0/2.0 family inet address 192.168.X.1/30
-commit (az bedzie sukces)
-run show configuration
-run show route
-run show interfaces terse
+### Tworzenie i modyfikacja staticów
+
+```ps1
 set routing-instances ROUTERX routing-options static route 192.168.X.4/30 next-hop 193.168.X.30
-commit
-run show route
-```
-## Modyfikacja staticów
 
-```bash
 activate / deactivate routing-instances ROUTERX routing-options static
-
 set routing-instances ROUTERX routing-options static route 0/0 next-hop 192.168.1.6
 ```
 
-## Konfiguracja RIP
-```bash
+### Konfiguracja protokołu RIP
+```ps1
 set routing-instances ROUTERX protocols rip group GRUPA1 neighbor ge-0/0/1.X00
-commit
 ```
 
-### Ustawianie polityki
-
-#### From direct
-```bash
-set policy-options policy-statement FROM-DIRECT-X
-from (warunek logiczny) 
-then accept/reject
-```
-
-```bash
-set policy-options policy-statement FROM-DIRECT-X from protocol direct
-set policy-options policy-statement FROM-DIRECT-X then accept
-run show configuration (sprawdzenie polityki)
-set routing-instances ROUTERX protocols rip group GRUPA1 export FROM-DIRECT-X
-```
-#### From RIP
-```bash
+### Polityka from RIP
+```ps1
 set policy-options policy-statement FROM-RIP-X from protocol rip
 set policy-options policy-statement FROM-RIP-X then accept
 set routing-instances ROUTERX protocols rip group GRUPA1 export FROM-RIP-X
@@ -87,74 +55,103 @@ set routing-instances ROUTERX protocols rip group GRUPA1 export FROM-RIP-X
 run show advertising-protocol rip 192.168.13.6
 ```
 
-### Komendy pomocniczne
-```bash
-run show rip ?
-run show rip neighbor instance ROUTERX
-run show route table ROUTERX.
+### Ustawianie polityki
+> Trzeba pamiętać o exportowaniu!
+```ps1
+set policy-options policy-statement FROM-DIRECT-X from protocol direct
+set policy-options policy-statement FROM-DIRECT-X then accept
 
+run show configuration (sprawdzenie polityki)
+
+set routing-instances ROUTERX protocols rip group GRUPA1 export FROM-DIRECT-X
 ```
 
-## Ładowanie i zapisywanie
 
-### Ładowanie
-Łączymy się z routerem 135 lub 138
 
-wpisujemy:
 
-```bash
-run telnet 172.10.0.XXX     (XXX to numer routera)
+<div style="page-break-after: always;"></div>
+
+<center>
+    <h1>Ustawianie switch'a</h1>
+</center>
+
+## Ustawianie switch
+
+Lorem ipsum
+
+<div style="page-break-after: always;"></div>
+
+<center>
+    <h1>Ustawianie komputera</h1>
+</center>
+
+## Ustawianie komputera
+
+Lorem ipsum
+
+> Zaktualizowano 01.06.2022
+
+<div style="page-break-after: always;"></div>
+
+<center>
+    <h1>Komendy pomocnicze</h1>
+</center>
+
+Wyświetlamy historię wpisanych komend w danym terminalu
+```ps1
+run show cli history
 ```
 
-logujemy się
+Wyświetlamy zmiane które chcemy zcommitować
+```ps1
+show | compare
 ```
+
+Powrót na całym routerze do stanu z poprzedniego commita
+```ps1
+rollback
+```
+> Uwaga, komenda nie uzwględnia tylko naszych commitów tylko przywraca najnowszy commit na danym routerze
+
+Wyświetlanie różnych ustawionych na routerze rzeczy
+```ps1
+run show routing instances
+
+show interfaces terse (bez terse pokazuje szczegółową konfigurację)
+
+show route table ROUTERX (bez table ROUTERX pokazuje całą tablice routingu)
+
+run show configuration routing-instances ROUTERX (bez routing-instances ROUTERX pokazuje całą konfiguracje)
+```
+
+## Obsługa routera
+>Po wejściu na router zawsze wpisujemy
+```ps1
 configure private
-load override LAN-gr3-dd.mm.rrrr
-commit
+update
 ```
-### Zapisywanie
-```bash
+## Zapisywanie i ładowanie 
+> Zapisywanie
+```ps1
 update
 save LAN-gr3-dd.mm.rrrr
 ```
 
-### Zajęcia 3 nie wiem gdzie te komendy
-```bash
-deactivate routing-instances ROUTERX protocols rip
+> Ładowanie
+```ps1
+load override *nazwa* 
+commit
 ```
+Zamiast ```*nazwa*``` wpisujemy nazwę zapisanej konfiguracji
 
-### Zajęcia 4
-```bash
-set policy-options prefix-list LISTAX 192.168.X.8/30
-set policy-options policy-statement POLITYKA_PROBNA_X from prefix-list LISTA1
-set policy-options policy-statement POLITYKA_PROBNA_X then accept
-set routing-instances ROUTERX protocols rip group GRUPA1 export POLITYKA_PROBNA_X
+LAN-gr3-dd.mm.rrrr
 
-insert routing-instances ROUTERX protocols rip group GRUPAX export FROM-RIP-1 before/after FROM-DIRECT-1 
-```
-(ustawiamy polityki tak jak chcemy w jakiej kolejnosc, sprawdzamy używając ```show | compare```)
+basic.cfg to podstwowa konfiguracja routera
+> Po załadowaniu wszystkie osoby zalogowane na router powinny użyć komenduy update
 
-## Protokół OSPF
-
-```bash
-set routing-instances ROUTERX protocols ospf area 0 interface ge-0/0/1.X00 potem X01 potem X05
-run show ospf neighbor instance ROUTERX
-run show ospf database instance ROUTERX
-run show ospf interface instance ROUTERX
-run show ospf database lsa-id 192.168.X.6 instance ROUTERX detail
-
-set interfaces lo0 unit X family inet address 192.X.0.132/32
-set routing-instances ROUTERX interface lo0.X
-( robilismy loopbacki na 131,132 136 o 133)
-```
-
-Sprzątanie routerów
-```bash
-run clear ospf database instance ROUTERX purge
-```
-
-## Zajęcia 5
-
-```bash
-
+#### Testowanie
+```ps1
+run show route
+run ping 192.168.X.29 routing-instance ROUTERX
+run show route table ROUTERX.
 ```
