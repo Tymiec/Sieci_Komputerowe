@@ -1,4 +1,8 @@
 # Szort Ball - to jest slang jak coś
+#### Jak pingować
+```bash
+ping 'ADDRESS' routing-instance 'INSTANCJA-ROUTINGU' (KOMPX albo ROUTERX zależy jak kto nazywa)
+```
 
 ## Router
 #### Szybka konfiguracja
