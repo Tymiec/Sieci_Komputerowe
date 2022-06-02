@@ -1,4 +1,8 @@
 # Szort Ball - to jest slang jak coś
+#### Jak pingować
+```bash
+ping 'ADDRESS' routing-instance 'INSTANCJA-ROUTINGU' (KOMPX albo ROUTERX zależy jak kto nazywa)
+```
 
 ## Router
 #### Szybka konfiguracja
@@ -16,8 +20,13 @@ set routing-instances 'ROUTERX' routing-options static route 'ADDRESS_SIECI'/'MA
 ```
 
 ## OSPF :OOOO:
+<<<<<<< HEAD
 #### Nikt nie wie po co ale robimy loopbacki (commitujemy dopiero po 2 komendach)
 ```ps1
+=======
+#### Nikt nie wie po co ale robimy loopbacki (commitujemy dopiero po 2 komendach policji)
+```bash
+>>>>>>> 266fd92571cb241f0c770ef0236965aff94d68e3
 set interfaces lo0.'NUMEREK' family inet address 192.'NUMEREK'.0.'KONIEC_IP_ROUTERA'/32
 set routing-instances 'ROUTERX' interface lo0.'NUMEREK'
 ```
@@ -29,7 +38,16 @@ set routing-instances 'ROUTERX' protocols ospf area 0 interface ge-0/0/'INTERFEJ
 ```ps1
 set routing-instances 'ROUTERX' protocols ospf area 0 interface ge-0/0/'INTERFEJS'.'VLAN' passive
 ```
-
+#### Robienie polityk
+```bash
+set policy-options policy-statement FROM-DIRECT-'NUMEREK' from protocol direct
+set policy-options policy-statement FROM-DIRECT-'NUMEREK' then accept
+set routing-instances 'ROUTERX' protocols ospf export FROM-DIRECT-'NUMEREK'
+```
+#### Jeżeli nie działa to sprawdzamy arp liste czy jest tam mac routera / komputera
+```bash
+run show arp
+```
 
 <br>
 
