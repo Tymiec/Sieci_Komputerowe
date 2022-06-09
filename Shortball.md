@@ -20,7 +20,7 @@ set routing-instances 'ROUTERX' routing-options static route 'ADDRESS_SIECI'/'MA
 ```
 
 ## OSPF :OOOO:
-#### Nikt nie wie po co ale robimy loopbacki (commitujemy dopiero po 2 komendach policji)
+#### Nikt nie wie po co, ale robimy loopbacki (commitujemy dopiero po 2 komendach policji)
 ```bash
 set interfaces lo0.'NUMEREK' family inet address 192.'NUMEREK'.0.'KONIEC_IP_ROUTERA'/32
 set routing-instances 'ROUTERX' interface lo0.'NUMEREK'
