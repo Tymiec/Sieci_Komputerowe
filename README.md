@@ -66,6 +66,20 @@ run show configuration (sprawdzenie polityki)
 set routing-instances ROUTERX protocols rip group GRUPA1 export FROM-DIRECT-X
 ```
 
+## OSPF
+#### Nikt nie wie po co ale robimy loopbacki (commitujemy dopiero po 2 komendach)
+```ps1
+set interfaces lo0.'NUMEREK' family inet address 192.'NUMEREK'.0.'KONIEC_IP_ROUTERA'/32
+set routing-instances 'ROUTERX' interface lo0.'NUMEREK'
+```
+#### Na interfejsie między routerami (jak jest więcej vlanów to dla każdego tak robimy)
+```ps1
+set routing-instances 'ROUTERX' protocols ospf area 0 interface ge-0/0/'INTERFEJS'.'VLAN'
+```
+#### Na interfejsie routera idącego do switcha
+```ps1
+set routing-instances 'ROUTERX' protocols ospf area 0 interface ge-0/0/'INTERFEJS'.'VLAN' passive
+```
 
 
 
@@ -75,9 +89,30 @@ set routing-instances ROUTERX protocols rip group GRUPA1 export FROM-DIRECT-X
     <h1>Ustawianie switch'a</h1>
 </center>
 
-## Ustawianie switch
+#### Tworzymy grupy dla vlanów i dodajemy je
+```ps1
+set vlans 'KOLORX' vlan-id 'VLANS'
+```
 
-Lorem ipsum
+#### Do każdego wyjścia ze switcha dodajemy grupe vlanów
+```ps1
+set interfaces ge-0/0/'INTERFEJS'.0 family ethernet-switching vlan members 'KOLORX'
+```
+
+#### Jeżeli port idzie w stronę routera / kolejnego switcha
+```ps1
+set interfaces ge-0/0/'INTERFEJS'.0 family ethernet-switching port-mode trunk
+```
+
+#### Jeżeli port idzie w stronę komputera
+```ps1
+set interfaces ge-0/0/'INTERFEJS'.0 family ethernet-switching port-mode access
+```
+
+#### Jeżeli nie działa to sprawdzamy tabele czy jest tam mac interfejsu komputera/switcha/routera
+```ps1
+run show ethernet-switching table
+```
 
 <div style="page-break-after: always;"></div>
 
@@ -87,9 +122,20 @@ Lorem ipsum
 
 ## Ustawianie komputera
 
-Lorem ipsum
+#### Wolny adres z sieci (pierwszy jest zajęty przez router)
+```ps1
+set interfaces ge-0/0/'INTERFEJS' unit 0 family inet address 192.168.X.'ADDRESS'/'MASKA' (np .9/30)
 
-> Zaktualizowano 01.06.2022
+set routing-instances 'KOMPUTERX' instance-type virtual-router
+set routing-instances 'KOMPUTERX' interface ge-0/0/'INTERFEJS'.0 (np. 1.0)
+set routing-instances 'KOMPUTERX' routing-options static route 0/0 next-hop 'ADDRESS_ROUTERA' (bez maski)
+```
+#### Jeżeli nie działa to sprawdzamy arp liste czy jest tam mac routera
+```ps1
+run show arp
+```
+
+
 
 <div style="page-break-after: always;"></div>
 
@@ -137,6 +183,9 @@ update
 save LAN-gr3-dd.mm.rrrr
 ```
 
+update
+save LAN-gr3-01.06.2022
+
 > Ładowanie
 ```ps1
 load override *nazwa* 
@@ -155,3 +204,5 @@ run show route
 run ping 192.168.X.29 routing-instance ROUTERX
 run show route table ROUTERX.
 ```
+
+> Zaktualizowano 01.06.2022
